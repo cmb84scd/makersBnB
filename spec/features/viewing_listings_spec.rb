@@ -1,7 +1,8 @@
+require_relative 'web_helpers'
+
 feature 'Viewing listings' do
   scenario 'a user can view listings' do
-    user = User.create(username: 'username', email: 'email@email.com', password: 'test_password')
-    authenticated_user = User.authenticate(username: 'username',password: 'test_password')
+    user_sign_in
     Listing.create(name: 'Minerva', description: 'A tiny house in the middle nowhere', price: '10.50')
     Listing.create(name: 'Boat House', description: 'A boat house on the shores of lake Loch Ness', price: '35.00')
 

@@ -10,7 +10,7 @@ feature 'Sign In' do
     click_button 'Sign In'
 
     expect(current_path).to eq '/'
-    # expect(page).to have_content "Welcome test_user!"
+    expect(page).to have_content "Welcome username"
   end
 
   scenario 'a user sees an error if their username does not match' do

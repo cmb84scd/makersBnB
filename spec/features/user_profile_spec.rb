@@ -1,4 +1,4 @@
-require 'database_helpers'
+require_relative 'web_helpers'
 
 feature 'User profile page' do
   scenario 'a user can visit his profile page' do
@@ -55,7 +55,6 @@ feature 'User profile page' do
     visit '/users/username/user'
 
     first('.listing').click_button 'Delete'
-
 
     expect(current_path).to eq '/users/username/user'
     expect(page).not_to have_content 'Village House'

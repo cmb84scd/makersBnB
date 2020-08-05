@@ -1,7 +1,8 @@
+require_relative 'web_helpers'
+
 feature 'Create Listing' do
   scenario 'a user can submit a listing to website' do
-    user = User.create(username: 'username', email: 'email@email.com', password: 'test_password')
-    authenticated_user = User.authenticate(username: 'username',password: 'test_password')
+    user_sign_in
     visit '/'
     click_button "Add Listing"
 
@@ -20,7 +21,7 @@ feature 'Create Listing' do
     expect(page).to have_css "img[src='https://live.staticflickr.com/4159/33385628794_b912df519b_m.jpg']"
 
     first('.listing').click_button 'View'
-    
+
     expect(page).to have_content '2020-05-04'
     expect(page).to have_content '2020-05-05'
   end

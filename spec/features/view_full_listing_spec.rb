@@ -1,4 +1,4 @@
-require 'database_helpers'
+require_relative 'web_helpers'
 
 feature 'Viewing the full listing' do
   scenario 'User clicks view button' do
@@ -18,7 +18,7 @@ feature 'Viewing the full listing' do
     expect(page).to have_content "69.85"
   end
 
-  scenario "Click back to full listings" do 
+  scenario "Click back to full listings" do
     user_sign_in
     listing = Listing.create(name: "House of Horrors", description: "A very scary house", price: "69.85")
 
@@ -31,5 +31,5 @@ feature 'Viewing the full listing' do
     expect(page).to have_button "Home"
     click_button "Home"
     expect(current_path).to eq "/"
-  end 
+  end
 end

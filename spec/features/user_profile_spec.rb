@@ -1,5 +1,3 @@
-require_relative 'web_helpers'
-
 feature 'User profile page' do
   scenario 'a user can visit his profile page' do
     user_sign_in

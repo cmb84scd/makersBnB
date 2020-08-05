@@ -1,5 +1,4 @@
 require 'availability'
-require 'database_helpers'
 
 describe AvailableDates do
   describe '.create' do

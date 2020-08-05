@@ -1,5 +1,3 @@
-require_relative 'web_helpers'
-
 feature 'Viewing the full listing' do
   scenario 'User clicks view button' do
     user_sign_in

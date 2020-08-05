@@ -67,7 +67,7 @@ describe Listing do
   end
 
   describe '#available_dates' do
-    it 'intergrates available dates to the listing' do
+    it 'integrates available dates to the listing' do
       user_sign_in
       listing = Listing.create(name: 'Village House', description: 'Lovely cottage in the countryside', price: '50.00')
       AvailableDates.create(listing_id: "#{listing.id}", date_start: "2020-05-04", date_end: "2020-05-05")

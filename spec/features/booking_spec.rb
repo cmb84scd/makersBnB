@@ -1,5 +1,3 @@
-require_relative 'web_helpers'
-
 feature 'Booking' do
   scenario 'user clicks Book button' do
     user_sign_in

@@ -1,5 +1,3 @@
-require_relative 'web_helpers'
-
 feature 'Booking Confirmation' do
   scenario 'user can see their booking dates' do
     user_sign_in

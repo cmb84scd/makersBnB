@@ -1,5 +1,3 @@
-require_relative 'web_helpers'
-
 feature 'enables user to make enquiry' do
   scenario 'user inputs text and enquiry is sent to listing owner' do
     user_sign_in

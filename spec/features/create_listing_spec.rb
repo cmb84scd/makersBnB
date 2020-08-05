@@ -1,5 +1,3 @@
-require_relative 'web_helpers'
-
 feature 'Create Listing' do
   scenario 'a user can submit a listing to website' do
     user_sign_in

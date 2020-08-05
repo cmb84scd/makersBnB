@@ -1,5 +1,3 @@
-require_relative 'web_helpers'
-
 feature 'Viewing listings' do
   scenario 'a user can view listings' do
     user_sign_in

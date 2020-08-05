@@ -1,5 +1,4 @@
 require 'picture'
-require 'database_helpers'
 
 describe Picture do
   describe '.create' do

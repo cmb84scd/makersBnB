@@ -1,5 +1,4 @@
 require 'booking'
-require 'database_helpers'
 
 describe Booking do
   it 'lets you create a booking' do

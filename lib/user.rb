@@ -34,7 +34,11 @@ class User
     return unless result.any?
     return unless BCrypt::Password.new(result[0]['password']) == password
 
-    @@current_user = User.new(id: result[0]['id'], email: result[0]['email'], username: result[0]['username'])
+    @@current_user = User.new(
+      id: result[0]['id'],
+      email: result[0]['email'],
+      username: result[0]['username']
+    )
   end
 
   def self.sign_out

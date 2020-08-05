@@ -22,20 +22,24 @@ class Listing
 
   def self.create(name:, description:, price:)
     result = DatabaseConnection.query("INSERT INTO listings (name, description, price, user_id)
-      VALUES('#{name}', '#{description}', '#{price}', '#{User.current_user.id}') RETURNING id, name, description, price, user_id;")
+      VALUES('#{name}', '#{description}', '#{price}', '#{User.current_user.id}')
+      RETURNING id, name, description, price, user_id;")
     Listing.new(id: result[0]['id'], name: result[0]['name'], description: result[0]['description'],
       price: result[0]['price'], user_id: result[0]['user_id'])
   end
 
   def self.find(id:)
     result = DatabaseConnection.query("SELECT * FROM listings WHERE id = '#{id}'")
-    Listing.new(id: result[0]['id'], name: result[0]['name'], description: result[0]['description'], price: result[0]['price'],
-    user_id: result[0]['user_id'])
+    Listing.new(id: result[0]['id'], name: result[0]['name'], description: result[0]['description'],
+      price: result[0]['price'], user_id: result[0]['user_id'])
   end
 
   def self.update(id:, name:, description:, price:)
-    result = DatabaseConnection.query("UPDATE listings SET name = '#{name}', description = '#{description}', price = '#{price}' WHERE id = '#{id}' RETURNING id, name, description, price;")
-    Listing.new(id: result[0]['id'], name: result[0]['name'], description: result[0]['description'], price: result[0]['price'])
+    result = DatabaseConnection.query("UPDATE listings SET name = '#{name}',
+      description = '#{description}', price = '#{price}' WHERE id = '#{id}'
+      RETURNING id, name, description, price;")
+    Listing.new(id: result[0]['id'], name: result[0]['name'],
+      description: result[0]['description'], price: result[0]['price'])
   end
 
   def self.delete(id:)

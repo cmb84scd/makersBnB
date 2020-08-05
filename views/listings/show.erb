@@ -4,7 +4,7 @@
   <form action='/'>
     <input type="submit" value="Home">
   </form>
-  
+
   <h1> <%= @listing.name %></h1>
     <p>
       <%= @listing.description %>
@@ -29,8 +29,6 @@
      <form action="/booking/<%= @listing.id %>/book" method="get">
      <input type="submit" value="Book"/>
      </form>
-
-    </p>
 
       <img src="<%= @listing.pictures.first['url'] %>" alt="">
 </div>

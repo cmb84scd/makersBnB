@@ -12,5 +12,6 @@ feature 'Booking' do
     expect(page).to have_content "Please select dates below"
     expect(page).to have_field "book_from"
     expect(page).to have_field "book_to"
+    expect(page).to have_button "Submit"
   end
 end

@@ -1,11 +1,13 @@
-<h3>Please select dates below for...</h3>
+<div class="container" id="container">
+  <h3>Please select dates below for...</h3>
 
-<form action='/<%= @listing_id %>/store_booking' method="post">
-  <label> From:
-<input type="date" name="book_from" />
-</label>
-<label> To:
-<input type="date" name="book_to" />
-</label>
-<input type="submit" name="Submit"/>
-</form>
+  <form action='/<%= @listing_id %>/store_booking' method="post">
+    <label for="book_from"> From:
+      <input type="date" name="book_from" id="book_from"/>
+    </label>
+    <label for="book_to"> To:
+      <input type="date" name="book_to" id="book_to"/>
+    </label>
+    <input type="submit" value="Submit"/>
+  </form>
+</div>

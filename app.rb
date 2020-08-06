@@ -1,12 +1,11 @@
-require './lib/listing.rb'
-require 'sinatra/flash'
 require 'sinatra/base'
+require 'sinatra/flash'
 require './database_connection_setup'
+require './lib/listing.rb'
 require './lib/user'
 require './lib/picture'
 require './lib/availability'
 require './lib/booking'
-require './lib/database_connection.rb'
 
 class MakersBnB < Sinatra::Base
   enable :sessions, :method_override
@@ -19,7 +18,7 @@ class MakersBnB < Sinatra::Base
   end
 
   get '/listings/new' do
-    redirect '/' if User.current_user == nil
+    redirect '/' if User.current_user.nil?
     erb :'listings/new'
   end
 

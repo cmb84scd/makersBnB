@@ -29,6 +29,9 @@
       </li>
       <% else %>
       <li class="nav-item">
+        <a class="nav-link" href="/users/<%= User.current_user.username %>/user">My Account</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/listings/new">List Property</a>
       </li>
       <% end %>

@@ -2,7 +2,7 @@ feature 'Create Listing' do
   scenario 'a user can submit a listing to website' do
     user_sign_in
     visit '/'
-    click_button "Add Listing"
+    click_link "List Property"
 
     expect(page).to have_content 'Add new listing'
     fill_in :name, with: 'Fun House'

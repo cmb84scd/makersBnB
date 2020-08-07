@@ -14,9 +14,9 @@ feature 'Viewing listings' do
   scenario 'a user can select button to visit listings/new' do
     visit '/'
 
-    expect(page).to have_button "Add Listing"
+    expect(page).to have_link "List Property"
 
-    click_button 'Add Listing'
+    click_link 'List Property'
 
     expect(current_path).to eq '/listings/new'
   end

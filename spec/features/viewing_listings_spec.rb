@@ -15,7 +15,6 @@ feature 'Viewing listings' do
     visit '/'
 
     expect(page).to have_link "List Property"
-
     click_link 'List Property'
 
     expect(current_path).to eq '/listings/new'
@@ -25,9 +24,9 @@ end
 feature 'Sign in' do
   scenario 'a user can sign in' do
     visit '/'
-    click_button 'Sign Out'
-    expect(page).to have_link 'Log In'
+    click_button 'Log Out'
 
+    expect(page).to have_link 'Log In'
     click_link 'Log In'
 
     expect(current_path).to eq '/sessions/new'

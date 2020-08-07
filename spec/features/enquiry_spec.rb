@@ -6,7 +6,7 @@ feature 'enables user to make enquiry' do
     Picture.create(url: 'https://live.staticflickr.com/4159/33385628794_b912df519b_m.jpg', listing_id: "#{listing.id}")
     AvailableDates.create(listing_id: listing.id, date_start: '2020-05-04', date_end: '2020-05-05');
     visit('/')
-    click_button('Sign Out')
+    click_button('Log Out')
 
     User.create(username: 'Unicorn', email: 'collj035@gmail.com', password: '1234')
     User.authenticate(username: 'Unicorn', password: '1234')

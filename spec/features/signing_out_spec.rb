@@ -10,7 +10,7 @@ feature 'Signing Out' do
 
     expect(current_path).to eq '/'
 
-    click_button 'Sign Out'
+    click_button 'Log Out'
 
     expect(current_path).to eq '/'
     expect(page).to have_content 'You have signed out!'

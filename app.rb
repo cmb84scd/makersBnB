@@ -36,7 +36,7 @@ class MakersBnB < Sinatra::Base
     Picture.create(url: params[:picture_url], listing_id: listing.id)
     AvailableDates.create(listing_id: listing.id, date_start: params[:date_start],
       date_end: params[:date_end])
-    flash[:notice] = "Your listing has been added"
+    flash[:listing] = "Your listing has been added"
     redirect '/'
   end
 
@@ -103,7 +103,7 @@ class MakersBnB < Sinatra::Base
   post '/sessions/destroy' do
     session.clear
     User.sign_out
-    flash[:notice] = 'You have signed out!'
+    flash[:sign_out] = 'You have signed out!'
     redirect '/'
   end
 

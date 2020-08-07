@@ -1,8 +1,8 @@
 feature 'User sign up' do
   scenario 'A user can sign up' do
     visit('/')
-    click_button('Sign Out')
-    click_link('Register')
+    click_button 'Log Out'
+    click_link 'Register'
     sign_up
   end
 

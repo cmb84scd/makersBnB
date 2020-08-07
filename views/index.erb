@@ -12,17 +12,16 @@
     <% end %>
     <h1>Welcome to MakersBnB</h1>
       <%= flash[:welcome_user] %>
+    <% if User.current_user %>
+      <h3>Welcome <%= User.current_user.username %></h3>
+    <% end %>
 
     <% if User.current_user == nil %>
-    <form action="/signup">
-      <input type="submit" name="" value="Sign Up">
-    </form>
-
     <form action="/sessions/new">
       <input type="submit" name="" value="Sign In">
     </form>
     <% else %>
-    <h3>Welcome <%= User.current_user.username %></h3>
+
     <form action="/sessions/destroy" method="post">
       <input type="submit" name="" value="Sign Out">
     </form>

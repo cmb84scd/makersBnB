@@ -17,9 +17,7 @@
     <% end %>
 
     <% if User.current_user == nil %>
-    <form action="/sessions/new">
-      <input type="submit" name="" value="Sign In">
-    </form>
+
     <% else %>
 
     <form action="/sessions/destroy" method="post">

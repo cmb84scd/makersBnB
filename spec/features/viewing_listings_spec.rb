@@ -26,9 +26,9 @@ feature 'Sign in' do
   scenario 'a user can sign in' do
     visit '/'
     click_button 'Sign Out'
-    expect(page).to have_button 'Sign In'
+    expect(page).to have_link 'Log In'
 
-    click_button 'Sign In'
+    click_link 'Log In'
 
     expect(current_path).to eq '/sessions/new'
   end

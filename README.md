@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/cmb84scd/makersBnB.svg?branch=master)](https://travis-ci.org/cmb84scd/makersBnB)
+
 # makersBnB
 
 ## To use

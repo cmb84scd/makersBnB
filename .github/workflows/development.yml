@@ -59,7 +59,7 @@ jobs:
         sudo apt-get -y install libpq-dev postgresql-14 postgresql-client-14
     - name: Check installed components for PostgreSQL
       run: |
-        - pg_isready
+        pg_isready
       env:
         POSTGRES_HOST: localhost
         POSTGRES_PORT: 5432

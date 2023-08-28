@@ -28,7 +28,7 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres
+        image: postgres:14
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: postgres
@@ -51,17 +51,25 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Install PostgreSQL 14 client required for loading structure.sql
+      run: |
+        sudo bash -c "echo deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main >> /etc/apt/sources.list.d/pgdg.list"
+        wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+        sudo apt-get update
+        sudo apt-get -y install libpq-dev postgresql-14 postgresql-client-14
+    - name: Check installed components for PostgreSQL
+      run: pg_isready
     - name: Set up the test database
       run: |
-        - PGPASSWORD=postgres psql -U postgres -c 'CREATE DATABASE makers_bnb_test;'
-        - PGPASSWORD=postgres psql -U postgres -d makers_bnb_test -f db/migrations/01_create_user_table.sql
-        - PGPASSWORD=postgres psql -U postgres -d makers_bnb_test -f db/migrations/02_user_table_altered_no_duplicates.sql
-        - PGPASSWORD=postgres psql -U postgres -d makers_bnb_test -f db/migrations/03_create_listings_table.sql
-        - PGPASSWORD=postgres psql -U postgres -d makers_bnb_test -f db/migrations/04_add_user_id_foreign_key_column.sql
-        - PGPASSWORD=postgres psql -U postgres -d makers_bnb_test -f db/migrations/05_create_pictures_table.sql
-        - PGPASSWORD=postgres psql -U postgres -d makers_bnb_test -f db/migrations/06_alter_pictures_table.sql
-        - PGPASSWORD=postgres psql -U postgres -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
-        - PGPASSWORD=postgres psql -U postgres -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
+        - psql -U postgres -c 'CREATE DATABASE makers_bnb_test;'
+        - psql -U postgres -d makers_bnb_test -f db/migrations/01_create_user_table.sql
+        - psql -U postgres -d makers_bnb_test -f db/migrations/02_user_table_altered_no_duplicates.sql
+        - psql -U postgres -d makers_bnb_test -f db/migrations/03_create_listings_table.sql
+        - psql -U postgres -d makers_bnb_test -f db/migrations/04_add_user_id_foreign_key_column.sql
+        - psql -U postgres -d makers_bnb_test -f db/migrations/05_create_pictures_table.sql
+        - psql -U postgres -d makers_bnb_test -f db/migrations/06_alter_pictures_table.sql
+        - psql -U postgres -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
+        - psql -U postgres -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
       env:
         # The hostname used to communicate with the PostgreSQL service container
         POSTGRES_HOST: localhost

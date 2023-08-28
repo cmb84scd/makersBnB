@@ -58,7 +58,11 @@ jobs:
         sudo apt-get update
         sudo apt-get -y install libpq-dev postgresql-14 postgresql-client-14
     - name: Check installed components for PostgreSQL
-      run: pg_isready
+      run: |
+        - pg_isready
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5432
     - name: Set up the test database
       run: |
         - psql -U postgres -c 'CREATE DATABASE makers_bnb_test;'

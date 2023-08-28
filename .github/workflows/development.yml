@@ -53,7 +53,7 @@ jobs:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Set up the test database
       run: |
-        - psql -c 'create database makers_bnb_test;' -U postgres
+        - psql -U postgres -c 'CREATE DATABASE makers_bnb_test;'
         - psql -U postgres -d makers_bnb_test -f db/migrations/01_create_user_table.sql
         - psql -U postgres -d makers_bnb_test -f db/migrations/02_user_table_altered_no_duplicates.sql
         - psql -U postgres -d makers_bnb_test -f db/migrations/03_create_listings_table.sql

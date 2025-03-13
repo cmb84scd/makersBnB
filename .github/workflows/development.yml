@@ -19,7 +19,8 @@ jobs:
     - name: Start postgresql
       run: |
         sudo systemctl start postgresql.service
-        sudo -u postgres psql \du
+        sudo -u postgres psql "SELECT * FROM pg_user;"
+        sudo -u postgres psql "SELECT * FROM pg_roles;"
     - name: Set up the test database
       run: |
         sudo -u postgres createdb makers_bnb_test
@@ -31,5 +32,7 @@ jobs:
         sudo -u postgres psql -d makers_bnb_test -f db/migrations/06_alter_pictures_table.sql
         sudo -u postgres psql -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
         sudo -u postgres psql -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
+        sudo -u postgres psql \c makers_bnb_test
+        sudo -u postgres psql \dt
     # - name: Run tests
     #   run: bundle exec rspec

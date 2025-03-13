@@ -1,11 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
-# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
-
-name: Ruby
+name: Pipeline CI
 
 on:
   push:
@@ -13,56 +6,18 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   test:
-
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: ['2.7']
-    # Service containers to run with `container-job`
-    services:
-      # Label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres:14
-        # Provide the password for postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
-      uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+      uses: ruby/setup-ruby@v1.224.0
       with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Install PostgreSQL 14 client required for loading structure.sql
-      run: |
-        sudo bash -c "echo deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main >> /etc/apt/sources.list.d/pgdg.list"
-        wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
-        sudo apt-get update
-        sudo apt-get -y install libpq-dev postgresql-14 postgresql-client-14
-    - name: Check installed components for PostgreSQL
-      run: |
-        pg_isready
-      env:
-        POSTGRES_HOST: localhost
-        POSTGRES_PORT: 5432
+        ruby-version: '2.7'
+        bundler-cache: true
+    - name: Start postgresql
+      run: sudo systemctl start postgresql.service
     - name: Set up the test database
       run: |
         - psql -U postgres -c 'CREATE DATABASE makers_bnb_test;'
@@ -74,10 +29,5 @@ jobs:
         - psql -U postgres -d makers_bnb_test -f db/migrations/06_alter_pictures_table.sql
         - psql -U postgres -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
         - psql -U postgres -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
-      env:
-        # The hostname used to communicate with the PostgreSQL service container
-        POSTGRES_HOST: localhost
-        # The default PostgreSQL port
-        POSTGRES_PORT: 5432
     - name: Run tests
       run: bundle exec rspec

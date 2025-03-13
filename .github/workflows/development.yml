@@ -17,7 +17,9 @@ jobs:
         ruby-version: '2.7'
         bundler-cache: true
     - name: Start postgresql
-      run: sudo systemctl start postgresql.service
+      run: |
+        sudo systemctl start postgresql.service
+        sudo -u postgres psql -c "SELECT current_user;"
     - name: Set up the test database
       run: |
         - sudo -u postgres createdb makers_bnb_test

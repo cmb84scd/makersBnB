@@ -21,7 +21,7 @@ jobs:
         sudo systemctl start postgresql.service
     - name: Set up the test database
       run: |
-        - sudo -u postgres createdb makers_bnb_test
+        sudo -u postgres createdb makers_bnb_test
         # - sudo -u postgres psql -d makers_bnb_test -f db/migrations/01_create_user_table.sql
         # - sudo -u postgres psql -d makers_bnb_test -f db/migrations/02_user_table_altered_no_duplicates.sql
         # - sudo -u postgres psql -d makers_bnb_test -f db/migrations/03_create_listings_table.sql

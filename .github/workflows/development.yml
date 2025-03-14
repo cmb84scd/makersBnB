@@ -9,6 +9,20 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: makers_bnb_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/makers_bnb_test
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
@@ -16,19 +30,28 @@ jobs:
       with:
         ruby-version: '2.7'
         bundler-cache: true
-    - name: Start postgresql
+    # - name: Start postgresql
+    #   run: |
+    #     sudo systemctl start postgresql.service
+    - name: Wait for PostgreSQL to be ready
       run: |
-        sudo systemctl start postgresql.service
+        until pg_isready -h localhost -p 5432; do
+          echo "Waiting for PostgreSQL..."
+          sleep 1
+        done
     - name: Set up the test database
       run: |
-        sudo -u postgres createdb makers_bnb_test
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/01_create_user_table.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/02_user_table_altered_no_duplicates.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/03_create_listings_table.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/04_add_user_id_foreign_key_column.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/05_create_pictures_table.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/06_alter_pictures_table.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
+        # sudo -u postgres createdb makers_bnb_test
+        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/01_create_user_table.sql
+        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/02_user_table_altered_no_duplicates.sql
+        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/03_create_listings_table.sql
+        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/04_add_user_id_foreign_key_column.sql
+        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/05_create_pictures_table.sql
+        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/06_alter_pictures_table.sql
+        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
+        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
     - name: Run tests
       run: bundle exec rspec
+    - name: Clean up database
+      run: |
+        psql -h localhost -U postgres -c "DROP DATABASE IF EXISTS makers_bnb_test;"

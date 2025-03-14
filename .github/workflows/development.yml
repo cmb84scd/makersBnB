@@ -43,16 +43,14 @@ jobs:
         done
     - name: Set up the test database
       run: |
-        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/01_create_user_table.sql
-        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/02_user_table_altered_no_duplicates.sql
-        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/03_create_listings_table.sql
-        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/04_add_user_id_foreign_key_column.sql
-        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/05_create_pictures_table.sql
-        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/06_alter_pictures_table.sql
-        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
-        psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
-      env:
-        POSTGRES_PASSWORD: postgres
+        PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/01_create_user_table.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/02_user_table_altered_no_duplicates.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/03_create_listings_table.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/04_add_user_id_foreign_key_column.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/05_create_pictures_table.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/06_alter_pictures_table.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
     - name: Run tests
       run: bundle exec rspec
     - name: Clean up database

@@ -30,7 +30,5 @@ jobs:
         sudo -u postgres psql -d makers_bnb_test -f db/migrations/06_alter_pictures_table.sql
         sudo -u postgres psql -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
         sudo -u postgres psql -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
-        sudo -u postgres psql \c makers_bnb_test
-        sudo -u postgres psql \dt
-    # - name: Run tests
-    #   run: bundle exec rspec
+    - name: Run tests
+      run: bundle exec rspec

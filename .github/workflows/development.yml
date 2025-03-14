@@ -19,7 +19,6 @@ jobs:
     - name: Start postgresql
       run: |
         sudo systemctl start postgresql.service
-        psql -U postgres
     - name: Set up the test database
       run: |
         sudo -u postgres createdb makers_bnb_test

@@ -14,7 +14,7 @@ jobs:
         image: postgres:latest
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          # POSTGRES_PASSWORD: postgres
           POSTGRES_DB: makers_bnb_test
         options: >-
           --health-cmd pg_isready
@@ -27,7 +27,7 @@ jobs:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/makers_bnb_test
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432
-      POSTGRES_PASSWORD: postgres
+      # POSTGRES_PASSWORD: postgres
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby

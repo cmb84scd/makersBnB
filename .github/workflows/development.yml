@@ -21,8 +21,12 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/makers_bnb_test
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
@@ -30,18 +34,14 @@ jobs:
       with:
         ruby-version: '2.7'
         bundler-cache: true
-    # - name: Start postgresql
-    #   run: |
-    #     sudo systemctl start postgresql.service
-    # - name: Wait for PostgreSQL to be ready
-    #   run: |
-    #     until pg_isready -h localhost -p 5432; do
-    #       echo "Waiting for PostgreSQL..."
-    #       sleep 1
-    #     done
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        until pg_isready -h localhost -p 5432; do
+          echo "Waiting for PostgreSQL..."
+          sleep 1
+        done
     - name: Set up the test database
       run: |
-        # sudo -u postgres createdb makers_bnb_test
         psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/01_create_user_table.sql
         psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/02_user_table_altered_no_duplicates.sql
         psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/03_create_listings_table.sql

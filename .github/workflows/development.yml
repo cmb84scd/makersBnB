@@ -27,6 +27,7 @@ jobs:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/makers_bnb_test
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432
+      POSTGRES_PASSWORD: postgres
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby

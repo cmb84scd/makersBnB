@@ -51,7 +51,7 @@ jobs:
         PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
         PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
     - name: Run tests
-      run: PGPASSWORD=postgres bundle exec rspec
+      run: PGPASSWORD=postgres dbname=makers_bnb_test bundle exec rspec
     - name: Clean up database
       run: |
         psql -h localhost -U postgres -c "DROP DATABASE IF EXISTS makers_bnb_test;"

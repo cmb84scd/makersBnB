@@ -19,7 +19,6 @@ jobs:
     - name: Start postgresql
       run: |
         sudo systemctl start postgresql.service
-        sudo -u postgres psql -c "SELECT * FROM pg_roles;"
     - name: Set up the test database
       run: |
         sudo -u postgres createdb makers_bnb_test
@@ -32,4 +31,4 @@ jobs:
         sudo -u postgres psql -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
         sudo -u postgres psql -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
     - name: Run tests
-      run: DB_USER=postgres bundle exec rspec
+      run: PGUSER=postgres bundle exec rspec

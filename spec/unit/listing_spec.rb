@@ -1,5 +1,5 @@
 require 'listing'
-require './lib/user.rb'
+require './lib/user'
 require 'database_helpers'
 
 describe Listing do
@@ -45,7 +45,7 @@ describe Listing do
       user_sign_in
       listing = Listing.create(name: 'Village House', description: 'Lovely cottage in the countryside', price: '50.00')
 
-      result = Listing.find(id: "#{listing.id}")
+      result = Listing.find(id: listing.id.to_s)
 
       expect(result.id).to eq listing.id
       expect(result.name).to eq "Village House"
@@ -58,7 +58,7 @@ describe Listing do
     it 'integrates pictures to the listing' do
       user_sign_in
       listing = Listing.create(name: 'Village House', description: 'Lovely cottage in the countryside', price: '50.00')
-      Picture.create(url: 'https://live.staticflickr.com/4159/33385628794_b912df519b_m.jpg', listing_id: "#{listing.id}")
+      Picture.create(url: 'https://live.staticflickr.com/4159/33385628794_b912df519b_m.jpg', listing_id: listing.id.to_s)
 
       picture = listing.pictures.first
 
@@ -70,7 +70,7 @@ describe Listing do
     it 'integrates available dates to the listing' do
       user_sign_in
       listing = Listing.create(name: 'Village House', description: 'Lovely cottage in the countryside', price: '50.00')
-      AvailableDates.create(listing_id: "#{listing.id}", date_start: "2020-05-04", date_end: "2020-05-05")
+      AvailableDates.create(listing_id: listing.id.to_s, date_start: "2020-05-04", date_end: "2020-05-05")
 
       available = listing.available_dates.first
 
@@ -83,7 +83,7 @@ describe Listing do
     it 'updates a listing' do
       user_sign_in
       listing = Listing.create(name: 'Village House', description: 'Lovely cottage in the countryside', price: '50.00')
-      Picture.create(url: 'https://live.staticflickr.com/4159/33385628794_b912df519b_m.jpg', listing_id: "#{listing.id}")
+      Picture.create(url: 'https://live.staticflickr.com/4159/33385628794_b912df519b_m.jpg', listing_id: listing.id.to_s)
 
       updated_listing = Listing.update(id: listing.id, name: 'Cat House', description: 'Big fun house', price: '35.00')
 

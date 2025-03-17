@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/flash'
 require './database_connection_setup'
-require './lib/listing.rb'
+require './lib/listing'
 require './lib/user'
 require './lib/picture'
 require './lib/availability'

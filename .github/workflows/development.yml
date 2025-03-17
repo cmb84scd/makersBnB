@@ -37,5 +37,5 @@ jobs:
         PGUSER: postgres
         PGPASSWORD: password
         # PGDATABASE: makers_bnb_test
-        # PGHOST: localhost
-        PGPORT: 5432
+        PGHOST: localhost
+        # PGPORT: 5432

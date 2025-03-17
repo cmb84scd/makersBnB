@@ -2,7 +2,7 @@ feature 'User profile page' do
   scenario 'a user can visit his profile page' do
     user_sign_in
     listing = Listing.create(name: 'Village House', description: 'Lovely cottage in the countryside', price: '50.00')
-    Picture.create(url: 'https://live.staticflickr.com/4159/33385628794_b912df519b_m.jpg', listing_id: "#{listing.id}")
+    Picture.create(url: 'https://live.staticflickr.com/4159/33385628794_b912df519b_m.jpg', listing_id: listing.id.to_s)
 
     visit '/'
 
@@ -23,7 +23,7 @@ feature 'User profile page' do
   scenario 'a user can update his own listings' do
     user_sign_in
     listing = Listing.create(name: 'Village House', description: 'Lovely cottage in the countryside', price: '50.00')
-    Picture.create(url: 'https://live.staticflickr.com/4159/33385628794_b912df519b_m.jpg', listing_id: "#{listing.id}")
+    Picture.create(url: 'https://live.staticflickr.com/4159/33385628794_b912df519b_m.jpg', listing_id: listing.id.to_s)
 
     visit '/users/username/user'
 
@@ -48,7 +48,7 @@ feature 'User profile page' do
   scenario 'a user can delete his own listings' do
     user_sign_in
     listing = Listing.create(name: 'Village House', description: 'Lovely cottage in the countryside', price: '50.00')
-    Picture.create(url: 'https://live.staticflickr.com/5482/30494278595_081c80f8cc_m.jpg', listing_id: "#{listing.id}")
+    Picture.create(url: 'https://live.staticflickr.com/5482/30494278595_081c80f8cc_m.jpg', listing_id: listing.id.to_s)
 
     visit '/users/username/user'
 

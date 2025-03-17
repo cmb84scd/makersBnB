@@ -58,6 +58,7 @@ GEM
     parser (3.3.7.1)
       ast (~> 2.4.1)
       racc
+    pg (1.5.9)
     pony (1.13.1)
       mail (>= 2.0)
     public_suffix (6.0.1)
@@ -142,6 +143,7 @@ DEPENDENCIES
   bcrypt
   capybara
   mail
+  pg
   pony
   rspec
   rubocop (= 1.20)

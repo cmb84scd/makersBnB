@@ -36,6 +36,6 @@ jobs:
       env:
         PGUSER: postgres
         PGPASSWORD: password
-        PGDATABASE: makers_bnb_test
-        PGHOST: localhost
-        PGPORT: 5432
+        # PGDATABASE: makers_bnb_test
+        # PGHOST: localhost
+        # PGPORT: 5432

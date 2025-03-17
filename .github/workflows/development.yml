@@ -19,6 +19,7 @@ jobs:
     - name: Start postgresql
       run: |
         sudo systemctl start postgresql.service
+        sudo -u postgres psql -c "SELECT * FROM pg_roles;"
     - name: Set up the test database
       run: |
         sudo -u postgres createdb makers_bnb_test

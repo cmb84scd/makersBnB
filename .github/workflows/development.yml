@@ -31,4 +31,9 @@ jobs:
         sudo -u postgres psql -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
         sudo -u postgres psql -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
     - name: Run tests
-      run: PGDATABASE=makers_bnb_test PGUSER=postgres bundle exec rspec
+      run: bundle exec rspec
+      env:
+        PGUSER: postgres
+        PGDATABASE: makers_bnb_test
+        PGHOST: localhost
+        PGPORT: 5432

@@ -12,7 +12,7 @@ group :test do
   gem 'bcrypt'
   gem 'capybara'
   gem 'rspec'
-  gem 'rubocop', '0.79.0'
+  gem 'rubocop', '1.20', require: false
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
 

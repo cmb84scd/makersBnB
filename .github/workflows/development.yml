@@ -1,0 +1,41 @@
+name: Pipeline CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      PGUSER: postgres
+      PGPASSWORD: ${{ secrets.PGPASSWORD }}
+      PGDATABASE: makers_bnb_test
+      PGHOST: localhost
+      PGPORT: 5432
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1.224.0
+      with:
+        ruby-version: '2.7'
+        bundler-cache: true
+    - name: Set up postgresql
+      run: |
+        sudo systemctl start postgresql.service
+        sudo -u ${{ env.PGUSER }} psql -c "ALTER USER ${{ env.PGUSER }} PASSWORD '${{ env.PGPASSWORD }}';"
+    - name: Set up the test database
+      run: |
+        sudo -u ${{ env.PGUSER }} createdb ${{ env.PGDATABASE }}
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/01_create_user_table.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/02_user_table_altered_no_duplicates.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/03_create_listings_table.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/04_add_user_id_foreign_key_column.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/05_create_pictures_table.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/06_alter_pictures_table.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/07_create_availability_table.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/08_create_bookings_table.sql
+    - name: Run tests
+      run: bundle exec rspec

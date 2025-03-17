@@ -27,7 +27,6 @@ jobs:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/makers_bnb_test
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432
-      # POSTGRES_PASSWORD: postgres
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
@@ -52,7 +51,7 @@ jobs:
         PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
         PGPASSWORD=postgres psql -h localhost -U postgres -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
     - name: Run tests
-      run: bundle exec rspec
+      run: PGPASSWORD=postgres bundle exec rspec
     - name: Clean up database
       run: |
         psql -h localhost -U postgres -c "DROP DATABASE IF EXISTS makers_bnb_test;"

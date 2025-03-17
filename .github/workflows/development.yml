@@ -19,6 +19,7 @@ jobs:
     - name: Start postgresql
       run: |
         sudo systemctl start postgresql.service
+        sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'password';"
     - name: Set up the test database
       run: |
         sudo -u postgres createdb makers_bnb_test
@@ -34,7 +35,7 @@ jobs:
       run: bundle exec rspec
       env:
         PGUSER: postgres
-        PGPASSWORD: postgres
+        PGPASSWORD: password
         PGDATABASE: makers_bnb_test
         PGHOST: localhost
         PGPORT: 5432

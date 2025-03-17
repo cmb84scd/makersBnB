@@ -9,6 +9,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      PGUSER: postgres
+      PGPASSWORD: ${{ secrets.PGPASSWORD }}
+      PGDATABASE: makers_bnb_test
+      PGHOST: localhost
+      PGPORT: 5432
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
@@ -16,26 +22,20 @@ jobs:
       with:
         ruby-version: '2.7'
         bundler-cache: true
-    - name: Start postgresql
+    - name: Set up postgresql
       run: |
         sudo systemctl start postgresql.service
-        sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'password';"
+        sudo -u ${{ env.PGUSER }} psql -c "ALTER USER ${{ env.PGUSER }} PASSWORD '${{ env.PGPASSWORD }}';"
     - name: Set up the test database
       run: |
-        sudo -u postgres createdb makers_bnb_test
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/01_create_user_table.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/02_user_table_altered_no_duplicates.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/03_create_listings_table.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/04_add_user_id_foreign_key_column.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/05_create_pictures_table.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/06_alter_pictures_table.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/07_create_availability_table.sql
-        sudo -u postgres psql -d makers_bnb_test -f db/migrations/08_create_bookings_table.sql
+        sudo -u ${{ env.PGUSER }} createdb ${{ env.PGDATABASE }}
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/01_create_user_table.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/02_user_table_altered_no_duplicates.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/03_create_listings_table.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/04_add_user_id_foreign_key_column.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/05_create_pictures_table.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/06_alter_pictures_table.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/07_create_availability_table.sql
+        sudo -u ${{ env.PGUSER }} psql -d ${{ env.PGDATABASE }} -f db/migrations/08_create_bookings_table.sql
     - name: Run tests
       run: bundle exec rspec
-      env:
-        PGUSER: postgres
-        PGPASSWORD: password
-        # PGDATABASE: makers_bnb_test
-        PGHOST: localhost
-        # PGPORT: 5432

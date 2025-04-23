@@ -22,7 +22,6 @@ jobs:
       with:
         ruby-version: '3.4'
         bundler-cache: true
-    - run: echo "pass ${env.PGPASSWORD}"
     - name: Set up postgresql
       run: |
         sudo systemctl start postgresql.service
